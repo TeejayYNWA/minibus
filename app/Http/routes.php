@@ -15,26 +15,21 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/company', function () {
-    return view('company');
-});
 
-Route::get('/vehicle', function () {
-    return view('vehicle');
-});
+//COMPANY RELATED
+Route::get('/company', 'CompanyController@index');
+Route::post('/companyInfo', 'CompanyController@redirect');
 
-Route::get('/driver', function () {
-    return view('driver');
-});
+//VEHICLE RELATED
+Route::get('/vehicle', 'VehicleController@index');
+Route::post('/vehicleInfo', 'VehicleController@redirect');
 
-Route::post('/companyInfo', function () {
-    return view('companyInfo');
-});
+//DRIVER RELATED
+Route::get('/driver', 'DriverController@index');
+Route::post('/driverInfo', 'DriverController@redirect');
 
-Route::post('/vehicleInfo', function () {
-    return view('vehicleInfo');
-});
 
-Route::post('/driverInfo', function () {
-    return view('driverInfo');
+
+Route::get('/checkInfo', function () {
+    return view('checkInfo');
 });
