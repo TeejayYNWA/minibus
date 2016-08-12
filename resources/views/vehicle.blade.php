@@ -5,11 +5,16 @@
 @section('content')
     {{-- dump($errors) --}}
     <h1>Enter vehicle info here</h1>
+    <?php
+            $annualMileage = ['5000'=>'5000','10000'=> '10000','15000'=> '15000','20000'=>'20000','25000'=>'25000','30000'=>'30000'];
+            $otherDrivers = [0,1,2,3,4,5];
+
+
+    ?>
 
     <div class="panel">
-        <form class="form" method="post" action="/vehicleInfo">
+            {!! Form::open(['class' => 'form', 'url' => '/vehicleInfo']) !!}
 
-            {{ csrf_field() }}
             <div class="form-group">
                 <label for="reg">Reg Number </label>
                 <input type="text" placeholder="Registration" name="reg_no" value="{{ old('reg_no', ((Session::has('vehicle.reg_no'))? Session::get('vehicle.reg_no'): '' ) )  }}">
@@ -108,15 +113,7 @@
 
             <div class="form-group">
                 <label for="mileage">Estimated annual mileage</label>
-                <select name="mileage" id="annual_mileage">
-                    <option value="0">0 to 4,999</option>
-                    <option value="1">5,000 to 9,999</option>
-                    <option value="2">10,000 to 14,999</option>
-                    <option value="3">15,000 to 19,999</option>
-                    <option value="4">20,000 to 24,999</option>
-                    <option value="5">25000 or more</option>
-                </select>
-
+                {!! Form::select('annual_mileage', $annualMileage, old('annual_mileage', (session()->has('vehicle.annual_mileage')) ? session('vehicle.annual_mileage') : null ) ) !!}
             </div>
 
             <div class="form-group">
@@ -133,7 +130,8 @@
 
             <div class="form-group">
                 <label for="driver name ">Main driver name</label>
-                <input type="text" placeholder="Main driver name" name="main_driver" value="{{ old('main_driver', ((Session::has('vehicle.main_driver'))? Session::get('vehicle.main_driver'): '' ) )  }}">
+                {!! Form::select('main_driver', $drivers, old('main_driver', (session()->has('vehicle.main_driver')) ? session('vehicle.main_driver') : null ) ) !!}
+
                 @if($errors->first('main_driver'))
                     <ul class="alert-danger">
                         @foreach ($errors->get('main_driver') as $message)
@@ -145,19 +143,12 @@
 
             <div class="form-group">
                 <label for="other drivers">Number of other drivers</label>
-                <select name="other drivers" id="other_drivers">
-                    <option value="0">0</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                </select>
+                {!! Form::select('other_drivers', $otherDrivers, old('other_drivers', (session()->has('vehicle.other_drivers')) ? session('vehicle.other_drivers') : null ) ) !!}
             </div>
 
 
             <button type="submit">Submit</button>
-        </form>
+        {!! Form::close() !!}
     </div>
 
 

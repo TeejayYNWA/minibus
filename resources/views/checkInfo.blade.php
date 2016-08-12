@@ -61,8 +61,10 @@
         <a href="/vehicle">edit</a>
 
         <table class="table">
+
             <tbody>
                 @foreach($info['vehicle'] as $key => $vehicleInfo )
+
                     <tr>
                         <td>{{ fix_title($key) }}</td>
                         <td>{{ $vehicleInfo }}</td>

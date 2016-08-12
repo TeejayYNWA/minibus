@@ -26,7 +26,7 @@ class CompanyController extends Controller
         $companyInfo = $request->except(['_token']);
         Session::put('company', $companyInfo);
 
-        return redirect('/vehicle');
+        return redirect('/driver');
     }
 
     

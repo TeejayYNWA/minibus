@@ -3,6 +3,12 @@
 @section('title', 'Driver Info')
 
 @section('content')
+
+    <?php
+    $titles = ['Mr'=>'Mr','Mrs'=>'Mrs','Ms'=>'Ms','Miss'=>'Miss','Dr'=>'Dr','Rev'=>'Rev','Prof'=>'Prof'];
+    $licenceHeld = ['0'=>'0 to 12 months','12'=>'1 Year','24'=>'2 Years','36'=>'3 Years','48'=>'4 Years','60'=>'5 Years','72'=>'5 or more Years']
+    ?>
+
     {{-- dump($errors) --}}
     <h1>Enter driver info here</h1>
 
@@ -12,15 +18,7 @@
             {{ csrf_field() }}
             <div class="form-group">
                 <label for="title">Title </label>
-                <select name="title" id="title">
-                    <option value="Mr">Mr</option>
-                    <option value="Mrs">Mrs</option>
-                    <option value="Ms">Ms</option>
-                    <option value="Miss">Miss</option>
-                    <option value="Dr">Dr</option>
-                    <option value="Rev">Rev</option>
-                    <option value="Prof">Prof</option>
-                </select>
+                {!! Form::select('title', $titles, old('title', (session()->has('driver.title')) ? session('driver.title') : null ) ) !!}
             </div>
 
             <div class="form-group">
@@ -97,15 +95,7 @@
 
             <div class="form-group">
                 <label for="licence held">Years Licence Held</label>
-                <select name="licence held" id="licence_held">
-                    <option value="<1">0 to 12 months</option>
-                    <option value="1">1 Year</option>
-                    <option value="2">2 Years</option>
-                    <option value="3">3 Years</option>
-                    <option value="4">4 Years</option>
-                    <option value="5">5 Years</option>
-                    <option value="5+">5 or more Years</option>
-                </select>
+                {!! Form::select('licence_held', $licenceHeld, old('licence_held', (session()->has('driver.licence_held')) ? session('driver.licence_held') : null ) ) !!}
             </div>
 
 

@@ -23,6 +23,6 @@ class DriverController extends Controller
         $driverInfo = $request->except(['_token']);
         Session::put('driver', $driverInfo);
 
-        return redirect('/checkInfo');
+        return redirect('/vehicle');
     }
 }

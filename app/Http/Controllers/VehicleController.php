@@ -15,7 +15,20 @@ class VehicleController extends Controller
 {
     public function index()
     {
-        return view('vehicle');
+        dump(session()->all());
+
+        // collect drivers names
+        $driver = session('driver');
+        $drivers[] = $driver['first_name'] . ' ' .$driver['surname'];
+        $drivers[] = 'Talvinder Bansal';
+        $drivers[] = 'Harbinder Bansal';
+
+        // send drivers to view
+        $data = [
+            'drivers' => $drivers,
+        ];
+
+        return view('vehicle', $data);
     }
 
     public function redirect( VehicleValidationRequest $request ) {
@@ -23,7 +36,7 @@ class VehicleController extends Controller
         $vehicleInfo = $request->except(['_token']);
         Session::put('vehicle', $vehicleInfo);
 
-        return redirect('/driver');
+        return redirect('/checkInfo');
     }
 
 }
