@@ -25,8 +25,11 @@ Route::get('/vehicle', 'VehicleController@index');
 Route::post('/vehicleInfo', 'VehicleController@redirect');
 
 //DRIVER RELATED
-Route::get('/driver', 'DriverController@index');
+Route::get('/drivers', 'DriverController@index');
 Route::post('/driverInfo', 'DriverController@redirect');
+Route::get('/driver', 'DriverController@addDriver');
+Route::get('/driver/edit/{id}', 'DriverController@edit');
+Route::get('/driver/delete/{id}', 'DriverController@delete');
 
 
 

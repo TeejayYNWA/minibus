@@ -19,7 +19,7 @@ class DriverValidationRequest extends Request
     public function rules(){
         return [
             'first_name' =>              'required|alpha_dash|alpha',
-            'intial'=>                   'alpha|max:1',
+            'initial'=>                   'alpha|max:1',
             'surname'=>                  'required|alpha_dash',
             'dob'=>                      'required|date',
             'occupation'=>               'required|string',
