@@ -44,7 +44,7 @@ class DriverController extends Controller
                 $driverInfo['id'] = max(array_keys($allDriverInfo)) + 1;//(string) count($allDriverInfo);
             }
 
-            $allDriverInfo[] = $driverInfo;
+            $allDriverInfo[ $driverInfo['id'] ] = $driverInfo;
 
         }
 

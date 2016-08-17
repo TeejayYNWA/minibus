@@ -29,7 +29,7 @@
         </tbody>
     </table>
     <a class="btn btn-default" href="/driver">Add Driver</a>
-    <a href="/vehicle" class="btn btn-default btn-success">Continue</a>
+    <a href="/vehicles" class="btn btn-default btn-success">Continue</a>
 
 
 

@@ -8,16 +8,12 @@
 
     <?php
 
-    //dump( Session::all() );
-
     function fix_title($string)
     {
         $title = str_replace("_", " ", $string);
         return ucfirst($title);
     }
 
-
-    $info = Session::all();
     ?>
 
     <div>
@@ -27,7 +23,7 @@
         <table class="table">
             <tbody>
 
-            @foreach($info['company'] as $key => $companyInfo )
+            @foreach($company as $key => $companyInfo )
 
                 <tr>
                     <td>{{ fix_title($key) }}</td>
@@ -42,41 +38,59 @@
 
     <div>
         <h2>Driver Info</h2>
-        <a href="/driver">edit</a>
-        <table class="table">
-            <tbody>
-            @foreach($info['driver'] as $key => $driverInfo )
+        <a href="/drivers">edit</a>
 
+        @foreach( $drivers as $key => $driverInfo )
+            <table class="table">
+
+                <thead>
                 <tr>
-                    <td>{{ fix_title($key) }}</td>
-                    <td>{{ $driverInfo }}</td>
+                    <td>Driver {{$key}}</td>
                 </tr>
-            @endforeach
-            </tbody>
-        </table>
+                </thead>
+
+                <tbody>
+                @foreach($driverInfo as $title => $value)
+                    <tr>
+                        <td> {{ fix_title($title)}}</td>
+
+                        <td>{{$value}}</td>
+                    </tr>
+                @endforeach
+                </tbody>
+            </table>
+        @endforeach
+
     </div>
 
     <div>
         <h2>Vehicle Info</h2>
-        <a href="/vehicle">edit</a>
+        <a href="/vehicles">edit</a>
 
-        <table class="table">
+            @foreach( $vehicles  as $key => $vehicleInfo )
+                <table class="table">
 
-            <tbody>
-                @foreach($info['vehicle'] as $key => $vehicleInfo )
-
+                    <thead>
                     <tr>
-                        <td>{{ fix_title($key) }}</td>
-                        <td>{{ $vehicleInfo }}</td>
+                        <td>Vehicle {{$key}}</td>
                     </tr>
-                @endforeach
-            </tbody>
-        </table>
+                    </thead>
 
+                    <tbody>
+                    @foreach($vehicleInfo as $title => $value)
+                        <tr>
+                            <td> {{ fix_title($title)}}</td>
+
+                            <td>{{$value}}</td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+        @endforeach
 
     </div>
 
-    <button class="btn-group-lg" href="/quote">GET QUOTES</button>
+    <button class="btn btn-default btn-success" href="/quote">GET QUOTES</button>
 
 @endsection
 

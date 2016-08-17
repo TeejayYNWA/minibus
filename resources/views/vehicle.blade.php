@@ -17,7 +17,9 @@
 
             <div class="form-group">
                 <label for="reg">Reg Number </label>
-                <input type="text" placeholder="Registration" name="reg_no" value="{{ old('reg_no', ((Session::has('vehicle.reg_no'))? Session::get('vehicle.reg_no'): '' ) )  }}">
+                <input type="text" placeholder="Registration" name="reg_no" value="{{ old('reg_no',($vehicle['reg_no'] ?? null))  }}">
+
+
                 @if($errors->first('reg_no'))
                     <ul class="alert-danger">
                         @foreach ($errors->get('reg_no') as $message)
@@ -29,7 +31,7 @@
 
             <div class="form-group">
                 <label for="make">Make</label>
-                <input type="text" placeholder="Make" name="make" value="{{ old('make', ((Session::has('vehicle.make'))? Session::get('vehicle.make'): '' ) )  }}">
+                <input type="text" placeholder="Make" name="make" value="{{ old('make',($vehicle['make'] ?? null))  }}">
                 @if($errors->first('make'))
                     <ul class="alert-danger">
                         @foreach ($errors->get('make') as $message)
@@ -41,7 +43,7 @@
 
             <div class="form-group">
                 <label for="model">Model</label>
-                <input type="text" placeholder="Model" name="model" value="{{ old('model', ((Session::has('vehicle.model'))? Session::get('vehicle.model'): '' ) )  }}">
+                <input type="text" placeholder="Model" name="model" value="{{ old('model',($vehicle['model'] ?? null))  }}">
                 @if($errors->first('model'))
                     <ul class="alert-danger">
                         @foreach ($errors->get('model') as $message)
@@ -53,7 +55,7 @@
 
             <div class="form-group">
                 <label for="address">Engine Size</label>
-                <input type="text" placeholder="Engine Size" name="engine_size" value="{{ old('engine_size', ((Session::has('vehicle.engine_size'))? Session::get('vehicle.engine_size'): '' ) )  }}">
+                <input type="text" placeholder="Engine Size" name="engine_size" value="{{ old('engine_size',($vehicle['engine_size'] ?? null))  }}">
                 @if($errors->first('engine_size'))
                     <ul class="alert-danger">
                         @foreach ($errors->get('engine_size') as $message)
@@ -65,7 +67,7 @@
 
             <div class="form-group">
                 <label for="fuel type">Fuel Type</label>
-                <input type="text" placeholder="Fuel Type" name="fuel_type" value="{{ old('fuel_type', ((Session::has('vehicle.fuel_type'))? Session::get('vehicle.fuel_type'): '' ) )  }}">
+                <input type="text" placeholder="Fuel Type" name="fuel_type" value="{{ old('fuel_type',($vehicle['fuel_type'] ?? null))  }}">
                 @if($errors->first('fuel_type'))
                     <ul class="alert-danger">
                         @foreach ($errors->get('fuel_type') as $message)
@@ -77,7 +79,7 @@
 
             <div class="form-group">
                 <label for="transmission">Transmission</label>
-                <input type="text" placeholder="Transmission" name="transmission" value="{{ old('transmission', ((Session::has('vehicle.transmission'))? Session::get('vehicle.transmission'): '' ) )  }}">
+                <input type="text" placeholder="Transmission" name="transmission" value="{{ old('transmission',($vehicle['transmission'] ?? null))  }}">
                 @if($errors->first('transmission'))
                     <ul class="alert-danger">
                         @foreach ($errors->get('transmission') as $message)
@@ -89,7 +91,7 @@
 
             <div class="form-group">
                 <label for="year">Year Of Registration </label>
-                <input type="text" placeholder="Registration" name="reg_year" value="{{ old('reg_year', ((Session::has('vehicle.reg_year'))? Session::get('vehicle.reg_year'): '' ) )  }}" >
+                <input type="text" placeholder="Registration" name="reg_year" value="{{ old('reg_year',($vehicle['reg_year'] ?? null))  }}">
                 @if($errors->first('reg_year'))
                     <ul class="alert-danger">
                         @foreach ($errors->get('reg_year') as $message)
@@ -101,7 +103,7 @@
 
             <div class="form-group">
                 <label for="seats">Number of seats</label>
-                <input type="text" placeholder="Number of seats" name="number_seats" value="{{ old('number_seats', ((Session::has('vehicle.number_seats'))? Session::get('vehicle.number_seats'): '' ) )  }}" >
+                <input type="text" placeholder="Number of seats" name="number_seats" value="{{ old('number_seats',($vehicle['number_seats'] ?? null))  }}">
                 @if($errors->first('number_seats'))
                     <ul class="alert-danger">
                         @foreach ($errors->get('number_seats') as $message)
@@ -118,7 +120,7 @@
 
             <div class="form-group">
                 <label for="value">Current Value(£)</label>
-                <input type="text" placeholder="Current Value" name="current_value" value="{{ old('current_value', ((Session::has('vehicle.current_value'))? Session::get('vehicle.current_value'): '' ) )  }}" >
+                <input type="text" placeholder="Current Value" name="current_value" value="{{ old('current_value',($vehicle['number_seats'] ?? null))  }}">
                 @if($errors->first('current_value'))
                     <ul class="alert-danger">
                         @foreach ($errors->get('current_value') as $message)
@@ -130,8 +132,7 @@
 
             <div class="form-group">
                 <label for="driver name ">Main driver name</label>
-                {!! Form::select('main_driver', $drivers, old('main_driver', (session()->has('vehicle.main_driver')) ? session('vehicle.main_driver') : null ) ) !!}
-
+                {!! Form::select('main_driver', $drivers, old('main_driver', (isset($vehicle['main_driver'])) ? $vehicle['main_driver'] : null ) ) !!}
                 @if($errors->first('main_driver'))
                     <ul class="alert-danger">
                         @foreach ($errors->get('main_driver') as $message)
@@ -143,11 +144,12 @@
 
             <div class="form-group">
                 <label for="other drivers">Number of other drivers</label>
-                {!! Form::select('other_drivers', $otherDrivers, old('other_drivers', (session()->has('vehicle.other_drivers')) ? session('vehicle.other_drivers') : null ) ) !!}
+                {!! Form::select('other_drivers', $otherDrivers, old('other_drivers', (isset($vehicle['other_drivers'])) ? $vehicle['other_drivers'] : null ) ) !!}
             </div>
 
-
+        {{ Form::hidden('id', old('id', ($vehicle['id'] ?? null ) ) ) }}
             <button type="submit">Submit</button>
+        <a href="/vehicles" class="btn btn-danger btn-sm">Return</a>
         {!! Form::close() !!}
     </div>
 

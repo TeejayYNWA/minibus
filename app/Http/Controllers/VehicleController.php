@@ -13,30 +13,116 @@ use Session;
 
 class VehicleController extends Controller
 {
+
+    private $sessionKey = 'vehicles';
+    
     public function index()
+    {
+        $vehicleInformation = Session::get($this->sessionKey, []);
+        $viewData = [
+            'vehicles' => $vehicleInformation
+        ];
+
+        return view('vehicles', $viewData);
+    }
+
+    public function redirect(VehicleValidationRequest $request)
+    {
+        //get validated info
+        $vehicleInfo = $request->except(['_token']);
+        $allVehicleInfo = Session::get($this->sessionKey, []);
+
+
+        //is this a new driver or an existing one?
+        if (isset($vehicleInfo['id']) && !empty($vehicleInfo['id'])) {
+            $currentVehicleId = $vehicleInfo['id'];
+            $allVehicleInfo[$currentVehicleId] = $vehicleInfo;
+
+        } else {
+            //if this is the first driver set its ID to 1 otherwise calculate the id from the highest array key
+            if (empty($allVehicleInfo)) {
+                $vehicleInfo['id'] = 1;
+            } else {
+                //if new create driver id and then add driver onto the end of the drivers session array
+                $vehicleInfo['id'] = max(array_keys($allVehicleInfo)) + 1;//(string) count($allDriverInfo);
+            }
+
+            $allVehicleInfo[$vehicleInfo['id']] = $vehicleInfo;
+
+        }
+
+
+        ///Save all vehicle info
+        Session::put($this->sessionKey, $allVehicleInfo);
+
+        return redirect('/vehicles');
+    }
+
+    public function addVehicle()
     {
         dump(session()->all());
 
         // collect drivers names
-        $driver = session('driver');
-        $drivers[] = $driver['first_name'] . ' ' .$driver['surname'];
-        $drivers[] = 'Talvinder Bansal';
-        $drivers[] = 'Harbinder Bansal';
+        $drivers = session('drivers');
 
         // send drivers to view
         $data = [
-            'drivers' => $drivers,
+            'drivers' => $this->getDriverNames($drivers),
         ];
+
+        //add new driver to array
+        $data['vehicle'] = [];
+
 
         return view('vehicle', $data);
     }
 
-    public function redirect( VehicleValidationRequest $request ) {
+    public function edit($id)
+    {
+        $allVehicleData = Session::get('vehicles');
+        $vehicleData = $allVehicleData[$id];
+        // collect drivers names
+        $drivers = session('drivers');
 
-        $vehicleInfo = $request->except(['_token']);
-        Session::put('vehicle', $vehicleInfo);
+        // collect drivers names
+        $drivers = session('drivers');
 
-        return redirect('/checkInfo');
+        // send drivers to view
+        $data = [
+            'drivers' => $this->getDriverNames($drivers),
+        ];
+
+        //add new driver to array
+        $data['vehicle'] = [];
+
+        $data['vehicle'] = $vehicleData;
+        
+        return view('vehicle', $data);
     }
 
+    public function delete($id)
+    {
+        $allVehicleData = Session::get('vehicles');
+        unset($allVehicleData[$id]);
+
+        Session::put('vehicles', $allVehicleData);
+
+        return redirect('/vehicles');
+
+    }
+
+    /**
+     * @param $drivers
+     * @return array
+     */
+    public function getDriverNames($drivers)
+    {
+        $driverNames = [];
+        // collect each drivers name and assign it to a key of that drivers id
+        foreach ($drivers as $driver) {
+            $driverNames[$driver['id']] = $driver['title'] .' ' . $driver['first_name'] . ' ' . $driver['surname'];
+        }
+        return $driverNames;
+    }
 }
+

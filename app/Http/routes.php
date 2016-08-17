@@ -21,8 +21,12 @@ Route::get('/company', 'CompanyController@index');
 Route::post('/companyInfo', 'CompanyController@redirect');
 
 //VEHICLE RELATED
-Route::get('/vehicle', 'VehicleController@index');
+Route::get('/vehicles', 'VehicleController@index');
+Route::get('/vehicle', 'VehicleController@addVehicle');
 Route::post('/vehicleInfo', 'VehicleController@redirect');
+Route::get('/vehicle/edit/{id}', 'VehicleController@edit');
+Route::get('/vehicle/delete/{id}', 'VehicleController@delete');
+
 
 //DRIVER RELATED
 Route::get('/drivers', 'DriverController@index');
@@ -32,7 +36,10 @@ Route::get('/driver/edit/{id}', 'DriverController@edit');
 Route::get('/driver/delete/{id}', 'DriverController@delete');
 
 
+//CHECK INFO
+Route::get('/checkInfo', 'CheckInfoController@index');
 
-Route::get('/checkInfo', function () {
-    return view('checkInfo');
+
+Route::get('/arrays', function(){
+    return view('array');
 });
