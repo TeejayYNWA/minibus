@@ -7,12 +7,20 @@
  */
 
 namespace App\Http\Controllers;
+use App\Http\Requests\Request;
+use Validator;
+use Session;
 
 
 class CheckInfoController extends Controller
 {
     public function index()
     {
+        if( ! Session::has('company') || empty( Session::get('company') ) )
+        {
+            return redirect('company');
+        }
+
         $info = \Session::all();
         dump($info);
 
@@ -20,25 +28,24 @@ class CheckInfoController extends Controller
         $drivers = $info['drivers'];
         // uppercase every vehicle make
         // foreach vehicle uppercase the make
-        foreach ($vehicles as $key => $vehicle)
-        {
+        foreach ($vehicles as $key => $vehicle) {
             //format vehicle data
             $vehicle['reg_no'] = strtoupper($vehicle['reg_no']);
             $vehicle['make'] = strtoupper($vehicle['make']);
             $vehicle['main_driver'] = $this->getDriverName($vehicle, $drivers);
 
             //re-assign the manipulated vehicle data back onto the $vehicles array
-            $vehicles[ $key ] = $vehicle;
+            $vehicles[$key] = $vehicle;
         }
 
         $viewData = [
-          'company'  => $info['company'],
-          'drivers'  => $info['drivers'],
-          'vehicles' => $vehicles,
+            'company' => $info['company'],
+            'drivers' => $info['drivers'],
+            'vehicles' => $vehicles,
         ];
 
         return view('checkInfo', $viewData);
-   
+
     }
 
     /**
@@ -57,9 +64,10 @@ class CheckInfoController extends Controller
     }
 
 
-    private function nameFromID()
-    {
-        //if Main driver value = $drivers $key
-        //return 'firstname' . 'intial' . 'surname'
-    }
+
+
+
+
+
+
 }

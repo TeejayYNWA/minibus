@@ -10,14 +10,22 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\VehicleValidationRequest;
 use Session;
+use Validator;
 
 class VehicleController extends Controller
 {
 
     private $sessionKey = 'vehicles';
-    
+
     public function index()
     {
+
+        if( ! Session::has('company') || empty( Session::get('company') ) )
+        {
+            return redirect('company');
+        }
+
+
         $vehicleInformation = Session::get($this->sessionKey, []);
         $viewData = [
             'vehicles' => $vehicleInformation
@@ -60,7 +68,10 @@ class VehicleController extends Controller
 
     public function addVehicle()
     {
-        dump(session()->all());
+        if( ! Session::has('company') || empty( Session::get('company') ) )
+        {
+            return redirect('company');
+        }
 
         // collect drivers names
         $drivers = session('drivers');
@@ -96,7 +107,7 @@ class VehicleController extends Controller
         $data['vehicle'] = [];
 
         $data['vehicle'] = $vehicleData;
-        
+
         return view('vehicle', $data);
     }
 
@@ -120,9 +131,50 @@ class VehicleController extends Controller
         $driverNames = [];
         // collect each drivers name and assign it to a key of that drivers id
         foreach ($drivers as $driver) {
-            $driverNames[$driver['id']] = $driver['title'] .' ' . $driver['first_name'] . ' ' . $driver['surname'];
+            $driverNames[$driver['id']] = $driver['title'] . ' ' . $driver['first_name'] . ' ' . $driver['surname'];
         }
         return $driverNames;
     }
+
+    public function validationCheck()
+    {
+        $info = \Session::all();
+        $errors = [];
+
+        if (!isset($info['vehicles']) || empty($info['vehicles']))
+        {
+            $errors[] = 'Minimum one vehicle required';
+            return redirect('/vehicles')
+                ->withErrors($errors);
+        }
+
+        
+        $vehicles = $info['vehicles'];
+        //collect all reg nos
+        $regNos = [];
+        foreach ($vehicles as $vehicle) {
+            $regNos[] = $vehicle['reg_no'];
+        }
+
+        //check for duplicate regnos
+        $duplicates = (array_count_values($regNos));
+
+        foreach ($duplicates as $reg => $count) {
+            if ($count > 1) {
+                $errors[] = 'Cannot have duplicate registration number ' . $reg;
+            }
+
+        }
+
+
+        if ($errors) {
+            return redirect('/vehicles')
+                ->withErrors($errors);
+        }
+
+        return redirect('/checkInfo');
+    }
+
+
 }
 

@@ -26,6 +26,7 @@ Route::get('/vehicle', 'VehicleController@addVehicle');
 Route::post('/vehicleInfo', 'VehicleController@redirect');
 Route::get('/vehicle/edit/{id}', 'VehicleController@edit');
 Route::get('/vehicle/delete/{id}', 'VehicleController@delete');
+Route::get('/vehicles/validate', 'VehicleController@validationCheck');
 
 
 //DRIVER RELATED
@@ -34,6 +35,7 @@ Route::post('/driverInfo', 'DriverController@redirect');
 Route::get('/driver', 'DriverController@addDriver');
 Route::get('/driver/edit/{id}', 'DriverController@edit');
 Route::get('/driver/delete/{id}', 'DriverController@delete');
+Route::get('/drivers/validate', 'DriverController@validationCheck');
 
 
 //CHECK INFO

@@ -15,12 +15,17 @@ class DriverController extends Controller
 {
     public function index()
     {
-        dump(session()->all());
-        $driverInformation =  Session::get('drivers',[]);
-        $viewData=[
-          'drivers'=> $driverInformation
+        if( ! Session::has('company') || empty( Session::get('company') ) )
+        {
+            return redirect('company');
+        }
+
+
+        $driverInformation = Session::get('drivers', []);
+        $viewData = [
+            'drivers' => $driverInformation
         ];
-        return view('drivers', $viewData );
+        return view('drivers', $viewData);
     }
 
     public function redirect(DriverValidationRequest $request)
@@ -30,21 +35,20 @@ class DriverController extends Controller
         $allDriverInfo = Session::get('drivers', []);
 
         //is this a new driver or an existing one?
-        if( isset( $driverInfo['id'] ) && !empty($driverInfo['id']))
-        {
+        if (isset($driverInfo['id']) && !empty($driverInfo['id'])) {
             $currentDriverId = $driverInfo['id'];
-            $allDriverInfo[ $currentDriverId ] = $driverInfo;
+            $allDriverInfo[$currentDriverId] = $driverInfo;
 
-        }else{
+        } else {
             //if this is the first driver set its ID to 1 otherwise calculate the id from the highest array key
             if (empty($allDriverInfo)) {
                 $driverInfo['id'] = 1;
-            }else{
+            } else {
                 //if new create driver id and then add driver onto the end of the drivers session array
                 $driverInfo['id'] = max(array_keys($allDriverInfo)) + 1;//(string) count($allDriverInfo);
             }
 
-            $allDriverInfo[ $driverInfo['id'] ] = $driverInfo;
+            $allDriverInfo[$driverInfo['id']] = $driverInfo;
 
         }
 
@@ -64,6 +68,11 @@ class DriverController extends Controller
 
     public function addDriver()
     {
+        if( ! Session::has('company') || empty( Session::get('company') ) )
+        {
+            return redirect('company');
+        }
+
         $data = $this->getViewVariables();
         $data['driver'] = [];
 
@@ -89,6 +98,27 @@ class DriverController extends Controller
         Session::put('drivers', $allDriverData);
 
         return redirect('/drivers');
-        
+
     }
+
+    public function validationCheck()
+    {
+
+        $info = Session::all();
+        $errors = [];
+
+        //if( ! Session::has('drivers') || empty( Session::get('drivers') ) )
+        if( ! isset($info['drivers']) || empty($info['drivers']) )
+        {
+            $errors[] = 'Minimum one driver required';
+            return redirect('/drivers')
+                ->withErrors($errors);
+        }
+
+
+        return redirect('/vehicles');
+
+    }
+
+
 }

@@ -6,7 +6,11 @@
 
     <h2>Vehicles</h2>
     <?php
-    dump(session()->all());
+
+    $messages = $errors;
+    $sessioninfo = Session::all();
+    dump($sessioninfo)
+
     ?>
 
     <table class="table">
@@ -31,8 +35,14 @@
 
         </tbody>
     </table>
+    <ul class="alert-danger">
+
+        @foreach ($messages->all()  as $message)
+            <li>{{ $message }}</li>
+        @endforeach
+    </ul>
     <a class="btn btn-default btn-primary" href="/vehicle">Add Vehicle</a>
-    <a href="/checkInfo" class="btn btn-default btn-success">Continue</a>
+    <a href="/vehicles/validate" class="btn btn-default btn-success">Continue</a>
 
 
 

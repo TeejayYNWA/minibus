@@ -93,7 +93,7 @@
             </div>
 
 
-            {{ Form::hidden('id', old('id', ($driver['id'] ?? null ) ) ) }}
+            {{ Form::hidden('id', old('id', ($driver['id'] ?? null ))) }}
             <button type="submit">Submit</button>
             <a href="/drivers" class="btn btn-danger btn-sm">Return</a>
         </form>

@@ -3,8 +3,13 @@
 @section('title', 'Drivers Info')
 
 @section('content')
+    <?php
+    $messages = $errors;
+            dump(Session::all());
+    ?>
 
     <h2>Drivers</h2>
+
     <table class="table">
         <thead>
         <tr>
@@ -28,12 +33,17 @@
         @endforeach
         </tbody>
     </table>
+
+
+    <ul class="alert-danger">
+
+        @foreach ($messages->all()  as $message)
+            <li>{{ $message }}</li>
+        @endforeach
+    </ul>
+
     <a class="btn btn-default" href="/driver">Add Driver</a>
-    <a href="/vehicles" class="btn btn-default btn-success">Continue</a>
-
-
-
-
+    <a href="/drivers/validate" class="btn btn-default btn-success">Continue</a>
 
 
 
