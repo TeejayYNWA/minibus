@@ -85,3 +85,33 @@
     }
 </pre>
 
+<h1>Laracast Examples</h1>
+<?php
+$animals = ['dog','cat','cow','horse'];
+$newAnimal = 'elephant';
+
+$animals[] = $newAnimal;
+
+?>
+@foreach ($animals as $animal)
+    <ul>
+        <li>{{ $animal }} ,</li>
+    </ul>
+@endforeach
+
+<?php
+$animalAssoc = [
+    'type' => 'dog',
+    'name' => 'meaow',
+    'colour'=> 'purple'
+];
+$animalAssoc['food'] = 'tuna'
+
+?>
+
+
+@foreach($animalAssoc as $key => $property)
+   <ul>
+        <li>{{$key}} : {{$property}}</li>
+    </ul>
+@endforeach

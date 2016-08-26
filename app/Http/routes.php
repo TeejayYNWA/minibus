@@ -41,6 +41,19 @@ Route::get('/drivers/validate', 'DriverController@validationCheck');
 //CHECK INFO
 Route::get('/checkInfo', 'CheckInfoController@index');
 
+//QUOTE RELATED
+Route::get('/quote', 'QuoteController@index');
+Route::get('/detailsToDB', 'QuoteController@index');
+
+
+
+
+
+
+
+
+
+
 
 Route::get('/arrays', function(){
     return view('array');

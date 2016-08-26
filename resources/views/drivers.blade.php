@@ -5,7 +5,6 @@
 @section('content')
     <?php
     $messages = $errors;
-            dump(Session::all());
     ?>
 
     <h2>Drivers</h2>
@@ -21,7 +20,7 @@
         <tbody>
         @foreach($drivers as $key => $driver)
             <tr>
-                <td>{{ ($driver['first_name']) }}</td>
+                <td>{{ ucfirst($driver['first_name']) }}</td>
 
                 <td>
                     <a href="/driver/edit/{{$key}}" class="btn-group-lg">Edit</a>

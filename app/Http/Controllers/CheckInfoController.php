@@ -22,13 +22,13 @@ class CheckInfoController extends Controller
         }
 
         $info = \Session::all();
-        dump($info);
+      
 
         $vehicles = $info['vehicles'];
         $drivers = $info['drivers'];
         // uppercase every vehicle make
         // foreach vehicle uppercase the make
-        foreach ($vehicles as $key => $vehicle) {
+        foreach ($vehicles as $key => $vehicle) { 
             //format vehicle data
             $vehicle['reg_no'] = strtoupper($vehicle['reg_no']);
             $vehicle['make'] = strtoupper($vehicle['make']);

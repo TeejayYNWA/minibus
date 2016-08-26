@@ -45,7 +45,7 @@
 
                 <thead>
                 <tr>
-                    <td>Driver {{$key}}</td>
+                    <td><h3>Driver {{$key}}</h3></td>
                 </tr>
                 </thead>
 
@@ -72,7 +72,7 @@
 
                     <thead>
                     <tr>
-                        <td>Vehicle {{$key}}</td>
+                        <td><h3>Vehicle {{$key}}</h3></td>
                     </tr>
                     </thead>
 
@@ -90,7 +90,7 @@
 
     </div>
 
-    <button class="btn btn-default btn-success" href="/quote">GET QUOTES</button>
+    <a class="btn btn-default btn-success" href="/detailsToDB">GET QUOTES</a>
 
 @endsection
 

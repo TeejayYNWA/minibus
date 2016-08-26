@@ -9,10 +9,9 @@
 
     $messages = $errors;
     $sessioninfo = Session::all();
-    dump($sessioninfo)
-
     ?>
 
+<div>
     <table class="table">
         <thead>
         <tr>
@@ -25,8 +24,8 @@
         <tbody>
         @foreach($vehicles as $key => $vehicle)
         <tr>
-            <td>{{ ($vehicle['model']) }}</td>
-            <td>{{ ($vehicle['reg_no']) }}</td>
+            <td>{{ ucfirst($vehicle['model']) }}</td>
+            <td>{{ strtoupper($vehicle['reg_no']) }}</td>
 
             <td><a href="/vehicle/edit/{{$key}}" class="btn btn-default btn-primary">Edit</a></td>
             <td><a href="/vehicle/delete/{{$key}}" class="btn btn-default btn-danger">Remove</a></td>
@@ -43,7 +42,7 @@
     </ul>
     <a class="btn btn-default btn-primary" href="/vehicle">Add Vehicle</a>
     <a href="/vehicles/validate" class="btn btn-default btn-success">Continue</a>
-
+</div>
 
 
 
